@@ -193,27 +193,27 @@ export default function Home({setIsScorePostedMessageVisible, isScoreNotPostedMe
                 <meta name="description" content="Guess whether the next number will be higher or lower than the current number and get on the global leaderboard if you score high enough." />
             </Helmet>
 
-            <header>
+            <header className="max-width">
                 <h1>Higher or Lower</h1>
                 <p>A random number between 1 and 100 (inclusive) has been generated. Guess whether the next number will be higher or lower than the current number.</p>
                 <p>If you guess correctly enough times in a row, you will be immortalised on our global leaderboard forever...or until someone beats your score.</p>
             </header>
 
-            <main>
-                <section>
+            <main className="max-width">
+                <section id="scores-numbers-and-buttons">
                     <div id="scores">
-                        <div>High Score: {highScore}</div>
-                        <div>Score: {score}</div>
+                        <div><b>High Score</b>: {highScore}</div>
+                        <div><b>Score</b>: {score}</div>
                     </div>
                     
-                    <div className="current-random-number" style={styleCurrentNumber}>{currentNumber}</div>
+                    <div className="current-number" style={styleCurrentNumber}>{currentNumber}</div>
 
                     {previousNumber
-                        ? <div className="previous-random-number">Previous number: {previousNumber}</div>
+                        ? <div className="previous-number"><b>Previous number</b>: {previousNumber}</div>
                         : null
                     }
 
-                    <div>
+                    <div className="buttons">
                         <button
                             type="button"
                             onClick={handleButtonLower}
@@ -229,23 +229,27 @@ export default function Home({setIsScorePostedMessageVisible, isScoreNotPostedMe
 
                 <section id="submit-score" style={styleSubmitScore}>
                     <h2>Submit Your Score</h2>
-                    <p>You scored high enough to make it onto the global leaderboard!</p>
+                    <p>You scored {score}! Add your details to the global leaderboard.</p>
                     {isNameValid === null || isNameValid === true
                         ? null
                         : <div className="error">Name can only contain letters and numbers and must start with a letter.</div>
                     }
                     <form>
-                        <label htmlFor="name">Name</label>
-                        <input
-                            type="text"
-                            id="name"
-                            name="name"
-                            value={nameInput}
-                            onChange={handleNameInput}
-                            maxLength="20"
-                        />
+                        <div className="label-and-input">
+                            <label htmlFor="name">Name</label>
+                            <input
+                                type="text"
+                                id="name"
+                                name="name"
+                                value={nameInput}
+                                onChange={handleNameInput}
+                                maxLength="10"
+                            />
+                        </div>
+                        
                         <Countries countryInput={countryInput} setCountryInput={setCountryInput} />
-                        <div>
+                        
+                        <div className="buttons">
                             <button
                                 type="button"
                                 onClick={handleCancelSubmitScoreButton}
@@ -266,24 +270,27 @@ export default function Home({setIsScorePostedMessageVisible, isScoreNotPostedMe
 
                 <section id="global-leaderboard">
                     <h2>Global Leaderboard</h2>
-                    <div id="global-leaderboard-table">
-                        <div id="global-leaderboard-headers">
-                            <div>#</div>
-                            <div>Name</div>
-                            <div>Country</div>
-                            <div>Score</div>
+                    {globalLeaderboard.length > 0
+                        ? <div id="global-leaderboard-table">
+                            <div id="global-leaderboard-headers">
+                                <div>#</div>
+                                <div>Name</div>
+                                <div>Country</div>
+                                <div>Score</div>
+                            </div>
+                            {globalLeaderboard.map((score) => {
+                                return (
+                                    <div key={score.rank} className="global-leaderboard-row">
+                                        <div>{score.rank}</div>
+                                        <div className="global-leaderboard-column-name">{score.name}</div>
+                                        <div>{score.country}</div>
+                                        <div>{score.score}</div>
+                                    </div>
+                                )
+                            })}
                         </div>
-                        {globalLeaderboard.map((score) => {
-                            return (
-                                <div key={score.rank} className="global-leaderboard-row">
-                                    <div>{score.rank}</div>
-                                    <div>{score.name}</div>
-                                    <div>{score.country}</div>
-                                    <div>{score.score}</div>
-                                </div>
-                            )
-                        })}
-                    </div>
+                        : <div>Be the first player on the global leaderboard.</div>
+                    }
                 </section>
             </main>
         </div>

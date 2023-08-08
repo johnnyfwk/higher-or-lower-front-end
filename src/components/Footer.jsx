@@ -6,7 +6,7 @@ export default function Footer() {
     }
 
     return (
-        <footer>
+        <footer className="max-width">
             <div id="footer-links" onClick={onClickFooterLinks}>
                 <Link to="/terms-and-conditions">Terms & Conditions</Link>
                 <Link to="/privacy-policy">Privacy Policy</Link>

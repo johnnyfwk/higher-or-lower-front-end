@@ -6,7 +6,7 @@ export default function Countries({countryInput, setCountryInput}) {
     }
 
     return (
-        <div>
+        <div id="countries-input">
             <label htmlFor="countries">Country</label>
             <select name="countries" id="countries" value={countryInput} onChange={handleCountryInput}>
                 <option defaultValue>Select Your Country</option>

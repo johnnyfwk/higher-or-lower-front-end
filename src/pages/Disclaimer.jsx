@@ -9,12 +9,11 @@ export default function Disclaimer() {
                 <meta name="description" content="The disclaimer for higherorlower.co.uk." />
             </Helmet>
 
-            <header>
+            <header className="max-width">
                 <h1>Disclaimer</h1>
-                <p>This is the header copy for the Disclaimer page.</p>
             </header>
 
-            <main>
+            <main className="max-width">
                 <h2>Interpretation and Definitions</h2>
 
                 <h3>Interpretation</h3>
