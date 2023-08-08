@@ -29,7 +29,7 @@ export default function Home({setIsScorePostedMessageVisible, isScoreNotPostedMe
         setHasGlobalLeaderboardLoadedSuccessfully(null);
         api.getOriginalScores()
             .then((response) => {
-                // setIsLoading(false);
+                setIsLoading(false);
                 setHasGlobalLeaderboardLoadedSuccessfully(true);
                 let rank = 0;
                 const globalLeaderBoardCopy = response.map((score) => {
@@ -44,7 +44,7 @@ export default function Home({setIsScorePostedMessageVisible, isScoreNotPostedMe
                 setGlobalLeaderboard(globalLeaderBoardCopy);
             })
             .catch((error) => {
-                // setIsLoading(false);
+                setIsLoading(false);
                 setHasGlobalLeaderboardLoadedSuccessfully(false);
             })
     }, [isScorePostedSuccessfully])
