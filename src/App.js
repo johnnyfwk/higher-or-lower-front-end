@@ -40,7 +40,7 @@ function App() {
             </Routes>
             <Footer />
 
-            <div id="score-added-to-global-leaderboard" style={styleScoreAddedToGlobalLeaderboard}>Your score has been added to the global leaderboard!</div>
+            <div id="score-added-to-global-leaderboard" style={styleScoreAddedToGlobalLeaderboard}>Your score has been added to the global leaderboard</div>
             <div id="score-not-added-to-global-leaderboard" style={styleScoreNotAddedToGlobalLeaderboard}>Your score could not be added to the global leaderboard</div>
         </div>
     );

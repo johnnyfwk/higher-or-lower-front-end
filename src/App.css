@@ -29,6 +29,8 @@
     --misty-rose: #FFEBE7;
 
     --max-width: 1000px;
+
+    --padding-left-and-right: 20px;
 }
 
 * {
@@ -37,27 +39,114 @@
     text-decoration: none;
 }
 
+@font-face {
+    font-family: Geologica;
+    src: url("../src/assets/fonts/Geologica-VariableFont_CRSV,SHRP,slnt,wght.ttf");
+}
+
 body {
     background: var(--night);
     color: var(--white);
+    font-family: Geologica;
+}
+
+.max-width {
+    max-width: var(--max-width);
+    margin: auto;
+}
+
+#logo-container {
+    background:var(--outer-space);
+    text-align: center;
+    padding: 10px var(--padding-left-and-right);
+    position: sticky;
+    top: 0;
 }
 
 #logo {
-    background: var(--grey)
+    /* background: var(--grey); */
+    font-weight: bold;
+}
+
+#logo:link,
+#logo:active,
+#logo:visited {
+    color: var(--white);
+}
+
+#logo:hover {
+    text-decoration: underline;
 }
 
 header {
-    background: var(--orange);
+    /* background: var(--orange); */
+    display: grid;
+    gap: 10px;
+    text-align: center;
+    padding: var(--padding-left-and-right);
 }
 
 main {
-    background: var(--violet);
+    /* background: var(--violet); */
+    padding: var(--padding-left-and-right);
+    display: grid;
+    gap: 30px;
+}
+
+h1 {
+    font-size: 3rem;
+}
+
+h2 {
+    font-size: 2rem;
 }
 
 p,
 ul,
 ol {
-    line-height: 1.3rem;
+    line-height: 1.5rem;
+    color: var(--silver)
+}
+
+p a:link,
+p a:active,
+p a:visited {
+    color: var(--rose);
+}
+
+p a:hover {
+    text-decoration: underline;
+}
+
+label {
+    font-weight: bold;
+}
+
+input,
+select {
+    font-family: Geologica;
+    padding: 10px;
+}
+
+.label-and-input {
+    display: grid;
+    gap: 10px;
+}
+
+.buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+}
+
+button {
+    padding: 10px 20px;
+    border-radius: 20px;
+    border: 0px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
 }
 
 .error {
@@ -71,7 +160,9 @@ ol {
     padding: 50px;
     bottom: -100%;
     text-align: center;
-    line-height: 1.5rem;
+    font-size: 1.3rem;
+    font-weight: bold;
+    line-height: 2rem;
     transition: bottom 0.2s;
 }
 
@@ -84,50 +175,105 @@ ol {
 }
 
 /*********************** ORIGINAL ***********************/
-.current-random-number {
-    font-size: 10rem;
+#original #scores-numbers-and-buttons {
+    display: grid;
+    gap: 20px;
+    justify-items: center;
+}
+
+.current-number {
+    font-size: 8rem;
+}
+
+.previous-number {
+    font-size: 1.5rem;
 }
 
 #scores {
     display: flex;
     flex-wrap: wrap;
     gap: 20px;
+    font-size: 1.5rem;
+    justify-content: center;
+}
+
+#submit-score {
+    /* background: var(--grey); */
+    display: grid;
+    gap: 10px;
+    justify-content: center;
+    text-align: center;
+    padding: 10px;
+}
+
+#submit-score form {
+    display: grid;
+    gap: 20px;
+    text-align: center;
+}
+
+#name,
+#countries {
+    text-align: center;
+}
+
+#countries-input {
+    display: grid;
+    gap: 10px;
 }
 
 #global-leaderboard {
-    background: var(--indigo);
+    display: grid;
+    gap: 10px;
+}
+
+#global-leaderboard {
+    /* background: var(--indigo); */
+}
+
+#global-leaderboard h2 {
+    text-align: center;
 }
 
 #global-leaderboard-table {
-    background: var(--tickle-me-pink);
+    /* background: var(--tickle-me-pink); */
+    font-size: 0.9rem;
 }
 
 #global-leaderboard-headers,
 .global-leaderboard-row {
     display: grid;
-    grid-template-columns: 10% 35% 40% 15%;
-
+    grid-template-columns: 10% 45% 30% 15%;
 }
 
 #global-leaderboard-headers {
+    background: var(--jet);
     font-weight: bold;
 }
 
 #global-leaderboard-headers > div,
 .global-leaderboard-row > div {
-    border: 1px solid var(--white);
+    /* background: var(--jet); */
+    border: 1px solid var(--jet);
+    display: grid;
     text-align: center;
+    align-content: center;
+    padding: 3px;
+    line-height: 1.3rem;
 }
 
-#submit-score {
-    background: var(--grey);
+.global-leaderboard-column-name {
+    word-wrap: break-word;
 }
 /*********************** ORIGINAL ***********************/
 
 footer {
-    background: var(--grey);
+    /* background: var(--grey); */
     display: grid;
     gap: 20px;
+    padding: var(--padding-left-and-right);
+    justify-items: center;
+    text-align: center;
 }
 
 footer a:link,
@@ -142,7 +288,7 @@ footer a:hover {
 
 #footer-links {
     display: grid;
-    gap: 10px;
+    gap: 20px;
 }
 
 #terms-and-conditions main,
@@ -152,7 +298,11 @@ footer a:hover {
     gap: 15px;
 }
 
-
+#copyright {
+    font-size: 0.9rem;
+    line-height: 1.3rem;
+    color: var(--battlship-gray)
+}
 
 @media only screen and (min-width: 600px) {
     #footer-links {

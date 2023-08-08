@@ -9,12 +9,11 @@ export default function TermsAndConditions() {
                 <meta name="description" content="The terms and conditions for HigherorLower.co.uk." />
             </Helmet>
 
-            <header>
+            <header className="max-width">
                 <h1>Terms & Conditions</h1>
-                <p>This is the header copy for the Terms & Conditions page.</p>
             </header>
 
-            <main>
+            <main className="max-width">
                 <p>Please read these terms and conditions carefully before using Our Service.</p>
 
                 <p>Welcome to HigherorLower.co.uk. We search the Internet to find goods and services that that we think would save our visitors money. We do not sell any products or services; everything featured on our site is sold by third-parties.</p>
