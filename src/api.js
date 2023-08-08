@@ -13,3 +13,13 @@ export function getOriginalScores() {
         })
 }
 // GET requests
+
+// POST requests
+export function postOriginalScore(name, score, country) {
+    return baseURL
+        .post("/original", {name, score, country})
+        .then((response) => {
+            return response.data.score;
+        })
+}
+// POST requests
