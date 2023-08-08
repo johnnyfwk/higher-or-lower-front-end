@@ -57,11 +57,41 @@ main {
 p,
 ul,
 ol {
-    line-height: 1.5rem;
+    line-height: 1.3rem;
 }
 
 .error {
     color: var(--rose);
+}
+
+#score-added-to-global-leaderboard,
+#score-not-added-to-global-leaderboard {
+    position: fixed;
+    width: 100%;
+    padding: 50px;
+    bottom: -100%;
+    text-align: center;
+    line-height: 1.5rem;
+    transition: bottom 0.2s;
+}
+
+#score-added-to-global-leaderboard {
+    background: var(--lime);
+}
+
+#score-not-added-to-global-leaderboard {
+    background: var(--rose);
+}
+
+/*********************** ORIGINAL ***********************/
+.current-random-number {
+    font-size: 10rem;
+}
+
+#scores {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
 }
 
 #global-leaderboard {
@@ -89,15 +119,8 @@ ol {
     text-align: center;
 }
 
-/*********************** ORIGINAL ***********************/
-.current-random-number {
-    font-size: 10rem;
-}
-
-#scores {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
+#submit-score {
+    background: var(--grey);
 }
 /*********************** ORIGINAL ***********************/
 

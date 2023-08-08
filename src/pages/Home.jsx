@@ -2,8 +2,9 @@ import { useState, useEffect } from "react";
 import { Helmet } from "react-helmet";
 import * as utils from "../utils";
 import * as api from "../api";
+import Countries from "../components/Countries";
 
-export default function Home() {
+export default function Home({setIsScorePostedMessageVisible, isScoreNotPostedMessageVisible, setIsScoreNotPostedMessageVisible}) {
     const minNumber = 1;
     const maxNumber = 100;
     const [previousNumber, setPreviousNumber] = useState(null);
@@ -14,6 +15,11 @@ export default function Home() {
     const [isLoading, setIsLoading] = useState(true);
     const [hasGlobalLeaderboardLoadedSuccessfully, setHasGlobalLeaderboardLoadedSuccessfully] = useState(null);
     const [globalLeaderboard, setGlobalLeaderboard] = useState([]);
+    const [isSubmitScoreFormVisible, setIsSubmitScoreFormVisible] = useState(false);
+    const [nameInput, setNameInput] = useState("");
+    const [isNameValid, setIsNameValid] = useState(null);
+    const [countryInput, setCountryInput] = useState("Select Your Country");
+    const [isScorePostedSuccessfully, setIsScorePostedSuccessfully] = useState(null)
 
     useEffect(() => {
         setCurrentNumber(utils.generateRandomNumber(minNumber, maxNumber));
@@ -39,7 +45,7 @@ export default function Home() {
                 setIsLoading(false);
                 setHasGlobalLeaderboardLoadedSuccessfully(false);
             })
-    }, [])
+    }, [isScorePostedSuccessfully])
 
     function handleButtonLower() {
         setPreviousNumber(currentNumber);
@@ -58,7 +64,21 @@ export default function Home() {
         }
         else {
             setIsGuessCorrect(false);
-            setScore(0);
+            if (score > 0) {
+                if (globalLeaderboard.length < 100) {
+                    setIsSubmitScoreFormVisible(true);
+                }
+                else if (score > globalLeaderboard[globalLeaderboard.length - 1].score) {
+                    setIsSubmitScoreFormVisible(true);
+                }
+                else {
+                    setScore(0);
+                    setIsSubmitScoreFormVisible(false);
+                }
+            }
+            else {
+                setScore(0);
+            }
         }
     }
 
@@ -79,8 +99,62 @@ export default function Home() {
         }
         else {
             setIsGuessCorrect(false);
-            setScore(0);
+            if (score > 0) {
+                if (globalLeaderboard.length < 100) {
+                    setIsSubmitScoreFormVisible(true);
+                }
+                else if (score > globalLeaderboard[globalLeaderboard.length - 1].score) {
+                    setIsSubmitScoreFormVisible(true);
+                }
+                else {
+                    setScore(0);
+                    setIsSubmitScoreFormVisible(false);
+                }
+            }
+            else {
+                setScore(0);
+            }
         }
+    }
+
+    function handleNameInput(event) {
+        setNameInput(event.target.value);
+        setIsNameValid(null);
+        if (event.target.value === "") {
+            setIsNameValid(null);
+        }
+        else if (!/^[a-zA-Z]+[0-9]*$/.test(event.target.value)) {
+            setIsNameValid(false);
+        }
+        else {
+            setIsNameValid(true);
+        }
+    }
+
+    function handleCancelSubmitScoreButton() {
+        setScore(0);
+        setNameInput("");
+        setCountryInput("Select Your Country");
+        setIsSubmitScoreFormVisible(false);
+        setIsScorePostedSuccessfully(null);
+    }
+
+    function handleSubmitScoreButton() {
+        setIsScorePostedSuccessfully(null);
+        api.postOriginalScore(nameInput, score, countryInput)
+            .then((response) => {
+                setIsScorePostedSuccessfully(true);
+                setIsScorePostedMessageVisible(true);
+                setTimeout(() => setIsScorePostedMessageVisible(false), 3000);
+                setScore(0);
+                setNameInput("");
+                setCountryInput("Select Your Country");
+                setIsSubmitScoreFormVisible(false);
+            })
+            .catch((error) => {
+                setIsScoreNotPostedMessageVisible(true);
+                setTimeout(() => setIsScoreNotPostedMessageVisible(false), 3000);
+            })
     }
 
     const styleCurrentNumber = {
@@ -89,6 +163,10 @@ export default function Home() {
             : isGuessCorrect === true
                 ? "#32CD32"
                 : "#FF206E"
+    }
+
+    const styleSubmitScore = {
+        display: isSubmitScoreFormVisible ? "grid" : "none"
     }
 
     if (isLoading) {
@@ -136,9 +214,54 @@ export default function Home() {
                     }
 
                     <div>
-                        <button type="button" onClick={handleButtonLower}>Lower</button>
-                        <button type="button" onClick={handleButtonHigher}>Higher</button>
+                        <button
+                            type="button"
+                            onClick={handleButtonLower}
+                            disabled={isSubmitScoreFormVisible}
+                        >Lower</button>
+                        <button
+                            type="button"
+                            onClick={handleButtonHigher}
+                            disabled={isSubmitScoreFormVisible}
+                        >Higher</button>
                     </div>
+                </section>
+
+                <section id="submit-score" style={styleSubmitScore}>
+                    <h2>Submit Your Score</h2>
+                    <p>You scored high enough to make it onto the global leaderboard!</p>
+                    {isNameValid === null || isNameValid === true
+                        ? null
+                        : <div className="error">Name can only contain letters and numbers and must start with a letter.</div>
+                    }
+                    <form>
+                        <label htmlFor="name">Name</label>
+                        <input
+                            type="text"
+                            id="name"
+                            name="name"
+                            value={nameInput}
+                            onChange={handleNameInput}
+                            maxLength="20"
+                        />
+                        <Countries countryInput={countryInput} setCountryInput={setCountryInput} />
+                        <div>
+                            <button
+                                type="button"
+                                onClick={handleCancelSubmitScoreButton}
+                            >Cancel</button>
+                            <button
+                                type="button"
+                                onClick={handleSubmitScoreButton}
+                                disabled={
+                                    !nameInput ||
+                                    countryInput === "Select Your Country" ||
+                                    !isNameValid ||
+                                    isScoreNotPostedMessageVisible
+                                }
+                            >Submit</button>
+                        </div>
+                    </form>
                 </section>
 
                 <section id="global-leaderboard">
