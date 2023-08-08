@@ -1,8 +1,10 @@
 import { useState, useEffect } from "react";
 import { Helmet } from "react-helmet";
+import Countries from "../components/Countries";
+import Loading from "../components/Loading";
 import * as utils from "../utils";
 import * as api from "../api";
-import Countries from "../components/Countries";
+
 
 export default function Home({setIsScorePostedMessageVisible, isScoreNotPostedMessageVisible, setIsScoreNotPostedMessageVisible}) {
     const minNumber = 1;
@@ -27,7 +29,7 @@ export default function Home({setIsScorePostedMessageVisible, isScoreNotPostedMe
         setHasGlobalLeaderboardLoadedSuccessfully(null);
         api.getOriginalScores()
             .then((response) => {
-                setIsLoading(false);
+                // setIsLoading(false);
                 setHasGlobalLeaderboardLoadedSuccessfully(true);
                 let rank = 0;
                 const globalLeaderBoardCopy = response.map((score) => {
@@ -42,7 +44,7 @@ export default function Home({setIsScorePostedMessageVisible, isScoreNotPostedMe
                 setGlobalLeaderboard(globalLeaderBoardCopy);
             })
             .catch((error) => {
-                setIsLoading(false);
+                // setIsLoading(false);
                 setHasGlobalLeaderboardLoadedSuccessfully(false);
             })
     }, [isScorePostedSuccessfully])
@@ -171,9 +173,7 @@ export default function Home({setIsScorePostedMessageVisible, isScoreNotPostedMe
 
     if (isLoading) {
         return (
-            <header>
-                <p>Page is loading...</p>
-            </header>
+            <Loading />
         )
     }
 

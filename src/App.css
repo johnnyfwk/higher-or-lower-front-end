@@ -64,7 +64,6 @@ body {
 }
 
 #logo {
-    /* background: var(--grey); */
     font-weight: bold;
 }
 
@@ -79,7 +78,6 @@ body {
 }
 
 header {
-    /* background: var(--orange); */
     display: grid;
     gap: 10px;
     text-align: center;
@@ -87,7 +85,6 @@ header {
 }
 
 main {
-    /* background: var(--violet); */
     padding: var(--padding-left-and-right);
     display: grid;
     gap: 30px;
@@ -153,6 +150,12 @@ button {
     color: var(--rose);
 }
 
+#joke {
+    color: var(--white);
+    font-size: 1.2rem;
+    line-height: 1.8rem;
+}
+
 #score-added-to-global-leaderboard,
 #score-not-added-to-global-leaderboard {
     position: fixed;
@@ -198,7 +201,6 @@ button {
 }
 
 #submit-score {
-    /* background: var(--grey); */
     display: grid;
     gap: 10px;
     justify-content: center;
@@ -227,16 +229,11 @@ button {
     gap: 10px;
 }
 
-#global-leaderboard {
-    /* background: var(--indigo); */
-}
-
 #global-leaderboard h2 {
     text-align: center;
 }
 
 #global-leaderboard-table {
-    /* background: var(--tickle-me-pink); */
     font-size: 0.9rem;
 }
 
@@ -253,7 +250,6 @@ button {
 
 #global-leaderboard-headers > div,
 .global-leaderboard-row > div {
-    /* background: var(--jet); */
     border: 1px solid var(--jet);
     display: grid;
     text-align: center;
@@ -268,7 +264,6 @@ button {
 /*********************** ORIGINAL ***********************/
 
 footer {
-    /* background: var(--grey); */
     display: grid;
     gap: 20px;
     padding: var(--padding-left-and-right);
