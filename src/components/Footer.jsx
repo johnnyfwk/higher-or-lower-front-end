@@ -9,8 +9,6 @@ export default function Footer() {
         <footer className="max-width">
             <div id="footer-links" onClick={onClickFooterLinks}>
                 <Link to="/terms-and-conditions">Terms & Conditions</Link>
-                <Link to="/privacy-policy">Privacy Policy</Link>
-                <Link to="/disclaimer">Disclaimer</Link>
             </div>
             <div id="copyright">Copyright &copy; {new Date().getFullYear()} HigherorLower.co.uk. All Rights Reserved.</div>
         </footer>
