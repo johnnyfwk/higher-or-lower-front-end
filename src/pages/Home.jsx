@@ -21,6 +21,7 @@ export default function Home({setIsScorePostedMessageVisible, isScoreNotPostedMe
     const [nameInput, setNameInput] = useState("");
     const [isNameValid, setIsNameValid] = useState(null);
     const [countryInput, setCountryInput] = useState("Select Your Country");
+    const [isScoreBeingSubmitted, setIsScoreBeingSubmitted] = useState(false);
     const [isScorePostedSuccessfully, setIsScorePostedSuccessfully] = useState(null)
 
     useEffect(() => {
@@ -142,9 +143,11 @@ export default function Home({setIsScorePostedMessageVisible, isScoreNotPostedMe
     }
 
     function handleSubmitScoreButton() {
+        setIsScoreBeingSubmitted(true);
         setIsScorePostedSuccessfully(null);
         api.postOriginalScore(nameInput, score, countryInput)
             .then((response) => {
+                setIsScoreBeingSubmitted(false);
                 setIsScorePostedSuccessfully(true);
                 setIsScorePostedMessageVisible(true);
                 setTimeout(() => setIsScorePostedMessageVisible(false), 3000);
@@ -154,6 +157,7 @@ export default function Home({setIsScorePostedMessageVisible, isScoreNotPostedMe
                 setIsSubmitScoreFormVisible(false);
             })
             .catch((error) => {
+                setIsScoreBeingSubmitted(false);
                 setIsScoreNotPostedMessageVisible(true);
                 setTimeout(() => setIsScoreNotPostedMessageVisible(false), 3000);
             })
@@ -248,6 +252,11 @@ export default function Home({setIsScorePostedMessageVisible, isScoreNotPostedMe
                         </div>
                         
                         <Countries countryInput={countryInput} setCountryInput={setCountryInput} />
+
+                        {isScoreBeingSubmitted
+                            ? <p>Submitting score...</p>
+                            : null
+                        }
                         
                         <div className="buttons">
                             <button
@@ -261,7 +270,8 @@ export default function Home({setIsScorePostedMessageVisible, isScoreNotPostedMe
                                     !nameInput ||
                                     countryInput === "Select Your Country" ||
                                     !isNameValid ||
-                                    isScoreNotPostedMessageVisible
+                                    isScoreNotPostedMessageVisible ||
+                                    isScoreBeingSubmitted
                                 }
                             >Submit</button>
                         </div>
