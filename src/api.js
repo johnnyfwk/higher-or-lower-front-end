@@ -1,7 +1,8 @@
 import axios from "axios";
 
 const baseURL = axios.create({
-    baseURL: "http://localhost:9090/api"
+    // baseURL: "http://localhost:9090/W2eR9tY4uI7oP1aS8dF3gH6jK5lQ0"
+    baseURL: "https://higher-or-lower.onrender.com/W2eR9tY4uI7oP1aS8dF3gH6jK5lQ0"
 });
 
 // GET requests
