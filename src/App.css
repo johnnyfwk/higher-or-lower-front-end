@@ -261,6 +261,10 @@ button {
 .global-leaderboard-column-name {
     word-wrap: break-word;
 }
+
+#global-leaderboard-first-player-message {
+    text-align: center;
+}
 /*********************** ORIGINAL ***********************/
 
 footer {

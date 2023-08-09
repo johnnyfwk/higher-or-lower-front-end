@@ -289,7 +289,7 @@ export default function Home({setIsScorePostedMessageVisible, isScoreNotPostedMe
                                 )
                             })}
                         </div>
-                        : <div>Be the first player on the global leaderboard.</div>
+                        : <div id="global-leaderboard-first-player-message">Be the first player on the global leaderboard.</div>
                     }
                 </section>
             </main>
