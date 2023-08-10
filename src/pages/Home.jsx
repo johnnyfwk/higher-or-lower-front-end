@@ -139,7 +139,6 @@ export default function Home({setIsScorePostedMessageVisible, isScoreNotPostedMe
         setNameInput("");
         setCountryInput("Select Your Country");
         setIsSubmitScoreFormVisible(false);
-        setIsScorePostedSuccessfully(null);
     }
 
     function handleSubmitScoreButton() {
