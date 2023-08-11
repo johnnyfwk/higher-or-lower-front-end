@@ -229,6 +229,10 @@ button {
     gap: 10px;
 }
 
+#loading-scores {
+    text-align: center;
+}
+
 #global-leaderboard h2 {
     text-align: center;
 }

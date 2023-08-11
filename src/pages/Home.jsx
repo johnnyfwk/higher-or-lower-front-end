@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { Helmet } from "react-helmet";
 import Countries from "../components/Countries";
-import Loading from "../components/Loading";
 import * as utils from "../utils";
 import * as api from "../api";
 
@@ -16,7 +15,7 @@ export default function Home({setIsScorePostedMessageVisible, isScoreNotPostedMe
     const [highScore, setHighScore] = useState(0);
     const [isLoading, setIsLoading] = useState(true);
     const [hasGlobalLeaderboardLoadedSuccessfully, setHasGlobalLeaderboardLoadedSuccessfully] = useState(null);
-    const [globalLeaderboard, setGlobalLeaderboard] = useState([]);
+    const [globalLeaderboard, setGlobalLeaderboard] = useState(null);
     const [isSubmitScoreFormVisible, setIsSubmitScoreFormVisible] = useState(false);
     const [nameInput, setNameInput] = useState("");
     const [isNameValid, setIsNameValid] = useState(null);
@@ -27,6 +26,7 @@ export default function Home({setIsScorePostedMessageVisible, isScoreNotPostedMe
     useEffect(() => {
         setCurrentNumber(utils.generateRandomNumber(minNumber, maxNumber));
         setIsLoading(true);
+        setGlobalLeaderboard(null);
         setHasGlobalLeaderboardLoadedSuccessfully(null);
         api.getOriginalScores()
             .then((response) => {
@@ -68,7 +68,11 @@ export default function Home({setIsScorePostedMessageVisible, isScoreNotPostedMe
         else {
             setIsGuessCorrect(false);
             if (score > 0) {
-                if (globalLeaderboard.length < 100) {
+                if (hasGlobalLeaderboardLoadedSuccessfully === false) {
+                    setScore(0);
+                    setIsSubmitScoreFormVisible(false);
+                }
+                else if (globalLeaderboard.length < 100) {
                     setIsSubmitScoreFormVisible(true);
                 }
                 else if (score > globalLeaderboard[globalLeaderboard.length - 1].score) {
@@ -103,7 +107,11 @@ export default function Home({setIsScorePostedMessageVisible, isScoreNotPostedMe
         else {
             setIsGuessCorrect(false);
             if (score > 0) {
-                if (globalLeaderboard.length < 100) {
+                if (hasGlobalLeaderboardLoadedSuccessfully === false) {
+                    setScore(0);
+                    setIsSubmitScoreFormVisible(false);
+                }
+                else if (globalLeaderboard.length < 100) {
                     setIsSubmitScoreFormVisible(true);
                 }
                 else if (score > globalLeaderboard[globalLeaderboard.length - 1].score) {
@@ -172,20 +180,6 @@ export default function Home({setIsScorePostedMessageVisible, isScoreNotPostedMe
 
     const styleSubmitScore = {
         display: isSubmitScoreFormVisible ? "grid" : "none"
-    }
-
-    if (isLoading) {
-        return (
-            <Loading />
-        )
-    }
-
-    if (hasGlobalLeaderboardLoadedSuccessfully === false) {
-        return (
-            <header>
-                <p className="error">Page could not be loaded.</p>
-            </header>
-        )
     }
 
     return (
@@ -279,26 +273,41 @@ export default function Home({setIsScorePostedMessageVisible, isScoreNotPostedMe
 
                 <section id="global-leaderboard">
                     <h2>Global Leaderboard</h2>
-                    {globalLeaderboard.length > 0
-                        ? <div id="global-leaderboard-table">
-                            <div id="global-leaderboard-headers">
-                                <div>#</div>
-                                <div>Name</div>
-                                <div>Country</div>
-                                <div>Score</div>
+
+                    {isLoading
+                        ? <div id="loading-scores">Loading scores...</div>
+                        : null
+                    }
+
+                    {hasGlobalLeaderboardLoadedSuccessfully === false
+                        ? <header>
+                            <div className="error">Leaderboard could not be loaded.</div>
+                        </header>
+                        : null
+                    }
+
+                    {globalLeaderboard === null
+                        ? null
+                        : globalLeaderboard.length === 0
+                            ? <div id="global-leaderboard-first-player-message">Be the first player on the global leaderboard.</div>
+                            : <div id="global-leaderboard-table">
+                                <div id="global-leaderboard-headers">
+                                    <div>#</div>
+                                    <div>Name</div>
+                                    <div>Country</div>
+                                    <div>Score</div>
+                                </div>
+                                {globalLeaderboard.map((score) => {
+                                    return (
+                                        <div key={score.rank} className="global-leaderboard-row">
+                                            <div>{score.rank}</div>
+                                            <div className="global-leaderboard-column-name">{score.name}</div>
+                                            <div>{score.country}</div>
+                                            <div>{score.score}</div>
+                                        </div>
+                                    )
+                                })}
                             </div>
-                            {globalLeaderboard.map((score) => {
-                                return (
-                                    <div key={score.rank} className="global-leaderboard-row">
-                                        <div>{score.rank}</div>
-                                        <div className="global-leaderboard-column-name">{score.name}</div>
-                                        <div>{score.country}</div>
-                                        <div>{score.score}</div>
-                                    </div>
-                                )
-                            })}
-                        </div>
-                        : <div id="global-leaderboard-first-player-message">Be the first player on the global leaderboard.</div>
                     }
                 </section>
             </main>
