@@ -280,9 +280,7 @@ export default function Home({setIsScorePostedMessageVisible, isScoreNotPostedMe
                     }
 
                     {hasGlobalLeaderboardLoadedSuccessfully === false
-                        ? <header>
-                            <div className="error">Leaderboard could not be loaded.</div>
-                        </header>
+                        ? <div className="error">Leaderboard could not be loaded.</div>
                         : null
                     }
 
