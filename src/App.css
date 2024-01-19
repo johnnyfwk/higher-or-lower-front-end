@@ -146,6 +146,10 @@ button {
     cursor: pointer;
 }
 
+.loading {
+    text-align: center;
+}
+
 .error {
     color: var(--rose);
 }

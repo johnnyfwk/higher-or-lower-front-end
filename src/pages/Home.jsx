@@ -196,119 +196,122 @@ export default function Home({setIsScorePostedMessageVisible, isScoreNotPostedMe
                 <p>If you guess correctly enough times in a row, you will be immortalised on our global leaderboard forever...or until someone beats your score.</p>
             </header>
 
-            <main className="max-width">
-                <section id="scores-numbers-and-buttons">
-                    <div id="scores">
-                        <div><b>High Score</b>: {highScore}</div>
-                        <div><b>Score</b>: {score}</div>
-                    </div>
-                    
-                    <div className="current-number" style={styleCurrentNumber}>{currentNumber}</div>
-
-                    {previousNumber
-                        ? <div className="previous-number"><b>Previous number</b>: {previousNumber}</div>
-                        : null
-                    }
-
-                    <div className="buttons">
-                        <button
-                            type="button"
-                            onClick={handleButtonLower}
-                            disabled={isSubmitScoreFormVisible}
-                        >Lower</button>
-                        <button
-                            type="button"
-                            onClick={handleButtonHigher}
-                            disabled={isSubmitScoreFormVisible}
-                        >Higher</button>
-                    </div>
-                </section>
-
-                <section id="submit-score" style={styleSubmitScore}>
-                    <h2>Submit Your Score</h2>
-                    <p>You scored {score}! Add your details to the global leaderboard.</p>
-                    {isNameValid === null || isNameValid === true
-                        ? null
-                        : <div className="error">Name can only contain letters and numbers and must start with a letter.</div>
-                    }
-                    <form>
-                        <div className="label-and-input">
-                            <label htmlFor="name">Name</label>
-                            <input
-                                type="text"
-                                id="name"
-                                name="name"
-                                value={nameInput}
-                                onChange={handleNameInput}
-                                maxLength="10"
-                            />
+            {hasGlobalLeaderboardLoadedSuccessfully
+                ? <main className="max-width">
+                    <section id="scores-numbers-and-buttons">
+                        <div id="scores">
+                            <div><b>High Score</b>: {highScore}</div>
+                            <div><b>Score</b>: {score}</div>
                         </div>
                         
-                        <Countries countryInput={countryInput} setCountryInput={setCountryInput} />
+                        <div className="current-number" style={styleCurrentNumber}>{currentNumber}</div>
 
-                        {isScoreBeingSubmitted
-                            ? <p>Submitting score...</p>
+                        {previousNumber
+                            ? <div className="previous-number"><b>Previous number</b>: {previousNumber}</div>
                             : null
                         }
-                        
+
                         <div className="buttons">
                             <button
                                 type="button"
-                                onClick={handleCancelSubmitScoreButton}
-                            >Cancel</button>
+                                onClick={handleButtonLower}
+                                disabled={isSubmitScoreFormVisible}
+                            >Lower</button>
                             <button
                                 type="button"
-                                onClick={handleSubmitScoreButton}
-                                disabled={
-                                    !nameInput ||
-                                    countryInput === "Select Your Country" ||
-                                    !isNameValid ||
-                                    isScoreNotPostedMessageVisible ||
-                                    isScoreBeingSubmitted
-                                }
-                            >Submit</button>
+                                onClick={handleButtonHigher}
+                                disabled={isSubmitScoreFormVisible}
+                            >Higher</button>
                         </div>
-                    </form>
-                </section>
+                    </section>
 
-                <section id="global-leaderboard">
-                    <h2>Global Leaderboard</h2>
-
-                    {isLoading
-                        ? <div id="loading-scores">Loading scores...</div>
-                        : null
-                    }
-
-                    {hasGlobalLeaderboardLoadedSuccessfully === false
-                        ? <div className="error">Leaderboard could not be loaded.</div>
-                        : null
-                    }
-
-                    {globalLeaderboard === null
-                        ? null
-                        : globalLeaderboard.length === 0
-                            ? <div id="global-leaderboard-first-player-message">Be the first player on the global leaderboard.</div>
-                            : <div id="global-leaderboard-table">
-                                <div id="global-leaderboard-headers">
-                                    <div>#</div>
-                                    <div>Name</div>
-                                    <div>Country</div>
-                                    <div>Score</div>
-                                </div>
-                                {globalLeaderboard.map((score) => {
-                                    return (
-                                        <div key={score.rank} className="global-leaderboard-row">
-                                            <div>{score.rank}</div>
-                                            <div className="global-leaderboard-column-name">{score.name}</div>
-                                            <div>{score.country}</div>
-                                            <div>{score.score}</div>
-                                        </div>
-                                    )
-                                })}
+                    <section id="submit-score" style={styleSubmitScore}>
+                        <h2>Submit Your Score</h2>
+                        <p>You scored {score}! Add your details to the global leaderboard.</p>
+                        {isNameValid === null || isNameValid === true
+                            ? null
+                            : <div className="error">Name can only contain letters and numbers and must start with a letter.</div>
+                        }
+                        <form>
+                            <div className="label-and-input">
+                                <label htmlFor="name">Name</label>
+                                <input
+                                    type="text"
+                                    id="name"
+                                    name="name"
+                                    value={nameInput}
+                                    onChange={handleNameInput}
+                                    maxLength="10"
+                                />
                             </div>
-                    }
-                </section>
-            </main>
+                            
+                            <Countries countryInput={countryInput} setCountryInput={setCountryInput} />
+
+                            {isScoreBeingSubmitted
+                                ? <p>Submitting score...</p>
+                                : null
+                            }
+                            
+                            <div className="buttons">
+                                <button
+                                    type="button"
+                                    onClick={handleCancelSubmitScoreButton}
+                                >Cancel</button>
+                                <button
+                                    type="button"
+                                    onClick={handleSubmitScoreButton}
+                                    disabled={
+                                        !nameInput ||
+                                        countryInput === "Select Your Country" ||
+                                        !isNameValid ||
+                                        isScoreNotPostedMessageVisible ||
+                                        isScoreBeingSubmitted
+                                    }
+                                >Submit</button>
+                            </div>
+                        </form>
+                    </section>
+
+                    <section id="global-leaderboard">
+                        <h2>Global Leaderboard</h2>
+
+                        {isLoading
+                            ? <div id="loading-scores">Loading scores...</div>
+                            : null
+                        }
+
+                        {hasGlobalLeaderboardLoadedSuccessfully === false
+                            ? <div className="error">Leaderboard could not be loaded.</div>
+                            : null
+                        }
+
+                        {globalLeaderboard === null
+                            ? null
+                            : globalLeaderboard.length === 0
+                                ? <div id="global-leaderboard-first-player-message">Be the first player on the global leaderboard.</div>
+                                : <div id="global-leaderboard-table">
+                                    <div id="global-leaderboard-headers">
+                                        <div>#</div>
+                                        <div>Name</div>
+                                        <div>Country</div>
+                                        <div>Score</div>
+                                    </div>
+                                    {globalLeaderboard.map((score) => {
+                                        return (
+                                            <div key={score.rank} className="global-leaderboard-row">
+                                                <div>{score.rank}</div>
+                                                <div className="global-leaderboard-column-name">{score.name}</div>
+                                                <div>{score.country}</div>
+                                                <div>{score.score}</div>
+                                            </div>
+                                        )
+                                    })}
+                                </div>
+                        }
+                    </section>
+                </main>
+                : <div className="loading">Loading...</div>
+            }
         </div>
     )
 }
